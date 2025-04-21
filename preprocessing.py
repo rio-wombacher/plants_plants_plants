@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import pickle
-import kagglehub
+#import kagglehub
 
 
 def InstallData():
@@ -67,6 +67,21 @@ class PreprocessAsNumpyArrays:
 
         self.train_datagenerator = ImageDataGenerator(rescale=1./255, rotation_range=20, height_shift_range=0.1, validation_split=0.125)
         self.val_datagenerator = ImageDataGenerator(rescale=1./255) 
+
+    def load_all_batches(generator):
+        num_batches = np.ceil(generator.samples/generator.batch_size)
+        images = []
+        labels = []
+
+        for batch in num_batches:
+            im_batch, lab_batch = next(generator)
+            images.append(im_batch)
+            labels.append(lab_batch)
+
+        images = np.concat(images, axis=0)
+        labels = np.concat(labels, axis=0)
+
+        return images, labels
         
     def call(self, train_path, val_path):
         ''' 
@@ -77,7 +92,7 @@ class PreprocessAsNumpyArrays:
         train_prepro = self.train_datagenerator.flow_from_directory(
             train_path,
             target_size=self.target_size,
-            batch_size=3900,
+            batch_size=500, #3900
             class_mode='categorical',
             shuffle=True,
             subset='training'
@@ -88,7 +103,7 @@ class PreprocessAsNumpyArrays:
         test_prepro = self.train_datagenerator.flow_from_directory(
             train_path,
             target_size=self.target_size,
-            batch_size=5500,
+            batch_size=500, #5500
             class_mode='categorical',
             shuffle=False, 
             subset='validation'
@@ -99,7 +114,7 @@ class PreprocessAsNumpyArrays:
         val_prepro = self.val_datagenerator.flow_from_directory(
             val_path,
             target_size=self.target_size,
-            batch_size=11000,
+            batch_size=500, #11000
             class_mode='categorical',
             shuffle=False
         )
@@ -157,12 +172,12 @@ Make sure data is downloaded and that the paths to the data directories are corr
 
 # For oscar
 oscar_path = '~/users/rparik14/.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
-train_path = f'{oscar_path}/PlantVillage/train'
-val_path = f'{oscar_path}/PlantVillage/val'
+#train_path = f'{oscar_path}/PlantVillage/train'
+#val_path = f'{oscar_path}/PlantVillage/val'
 
 # # For local device
-# train_path = '../PlantVillage/train'
-# val_path = '../PlantVillage/val'
+train_path = '../PlantVillage/train'
+val_path = '../PlantVillage/val'
 
 preprocessor = PreprocessAsNumpyArrays()
 preprocessor.call(train_path=train_path, val_path=val_path)

@@ -78,8 +78,8 @@ class PreprocessAsNumpyArrays:
             images.append(im_batch)
             labels.append(lab_batch)
 
-        images = np.concat(images, axis=0)
-        labels = np.concat(labels, axis=0)
+        images = tf.concat(images, axis=0)
+        labels = tf.concat(labels, axis=0)
 
         return images, labels
         
@@ -172,13 +172,13 @@ Make sure data is downloaded and that the paths to the data directories are corr
 '''
 
 # For oscar
-oscar_path = '~/users/rparik14/.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
-#train_path = f'{oscar_path}/PlantVillage/train'
-#val_path = f'{oscar_path}/PlantVillage/val'
+oscar_path = '../../.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
+train_path = f'{oscar_path}/PlantVillage/train'
+val_path = f'{oscar_path}/PlantVillage/val'
 
 # # For local device
-train_path = '../PlantVillage/train'
-val_path = '../PlantVillage/val'
+# train_path = '../PlantVillage/train'
+# val_path = '../PlantVillage/val'
 
 preprocessor = PreprocessAsNumpyArrays()
 preprocessor.call(train_path=train_path, val_path=val_path)

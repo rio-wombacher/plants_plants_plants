@@ -55,7 +55,8 @@ class PreprocessAsKerasObject:
 class PreprocessAsNumpyArrays:
     ''' 
     Preprocesses data and pickles train, val, and test data in a 70-20-10 split. 
-    Data is saved as numpy arrays instead of a keras object.
+    Data is saved as numpy arrays instead of a keras object. 
+    To reduce git storage usage, preprocessed data is saved in the folder outside the working directory.
     '''
     def __init__(self):
         '''

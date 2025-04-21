@@ -1,8 +1,13 @@
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from sklearn.model_selection import train_test_split
 import numpy as np
 import pickle
+import kagglehub
+
+
+def InstallData():
+    path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
+    print("Path to dataset files:", path)
 
 class PreprocessAsKerasObject:
     '''  
@@ -135,6 +140,20 @@ class PreprocessAsNumpyArrays:
         return
 
 #############################
+'''
+If you want to download the data from Kaggle through python, there are two options.
+    Option 1: Run InstallData() here.
+    Option 2: In terminal, type the following.
+        python
+        import kagglehub
+        path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
+        print("Path to dataset files:", path)
+'''
+#InstallData()
+#############################
+'''
+Make sure data is downloaded and that the paths to the data directories are correct before running the rest of the code.
+'''
 
 train_path = '../PlantVillage/train'
 val_path = '../PlantVillage/val'

@@ -158,7 +158,7 @@ Make sure data is downloaded and that the paths to the data directories are corr
 # For oscar
 oscar_path = '~/users/rparik14/.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
 train_path = f'{oscar_path}/PlantVillage/train'
-train_path = f'{oscar_path}/PlantVillage/val'
+val_path = f'{oscar_path}/PlantVillage/val'
 
 # # For local device
 # train_path = '../PlantVillage/train'

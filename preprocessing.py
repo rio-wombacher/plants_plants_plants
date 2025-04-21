@@ -155,8 +155,14 @@ If you want to download the data from Kaggle through python, there are two optio
 Make sure data is downloaded and that the paths to the data directories are correct before running the rest of the code.
 '''
 
-train_path = '../PlantVillage/train'
-val_path = '../PlantVillage/val'
+# For oscar
+oscar_path = '~/users/rparik14/.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
+train_path = f'{oscar_path}/PlantVillage/train'
+train_path = f'{oscar_path}/PlantVillage/val'
+
+# # For local device
+# train_path = '../PlantVillage/train'
+# val_path = '../PlantVillage/val'
 
 preprocessor = PreprocessAsNumpyArrays()
 preprocessor.call(train_path=train_path, val_path=val_path)

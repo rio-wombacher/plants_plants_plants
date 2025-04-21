@@ -2,10 +2,9 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import pickle
-#import kagglehub
-
 
 def InstallData():
+    import kagglehub
     path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
     print("Path to dataset files:", path)
 
@@ -132,24 +131,24 @@ class PreprocessAsNumpyArrays:
 
         #Pickle everything
 
-        with open("train_images.pkl", "wb") as f:
+        with open("../train_images.pkl", "wb") as f:
             pickle.dump(train_images, f)
         
-        with open("train_labels.pkl", 'wb') as f:
+        with open("../train_labels.pkl", 'wb') as f:
             pickle.dump(train_labels, f)
         print('\nTrain data pickled.')
 
-        with open("val_images.pkl", 'wb') as f:
+        with open("../val_images.pkl", 'wb') as f:
             pickle.dump(val_images, f)
         
-        with open("val_labels.pkl", 'wb') as f:
+        with open("../val_labels.pkl", 'wb') as f:
             pickle.dump(val_labels, f)
         print('Validation data pickled.')
 
-        with open("test_images.pkl", 'wb') as f:
+        with open("../test_images.pkl", 'wb') as f:
             pickle.dump(test_images, f)
         
-        with open("test_labels", 'wb') as f:
+        with open("../test_labels", 'wb') as f:
             pickle.dump(test_labels, f)
         print('Test data pickled.')
 
@@ -157,15 +156,22 @@ class PreprocessAsNumpyArrays:
 
 #############################
 '''
+DOWNLOADING DATA
+
 If you want to download the data from Kaggle through python, there are two options.
-    Option 1: Run InstallData() here.
+    Option 1: Run InstallData().
     Option 2: In terminal, type the following.
         python
         import kagglehub
         path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
         print("Path to dataset files:", path)
+
+    If you choose Option 2: path should be 'users/your_netid/.cache/kagglehub/datasets/mohitsingh1804/plantvillage/versions/1'
+    This way, you can use the oscar_path variable below. If this is not the case, adjust the oscar_path accordingly.
 '''
+
 #InstallData()
+
 #############################
 '''
 Make sure data is downloaded and that the paths to the data directories are correct before running the rest of the code.

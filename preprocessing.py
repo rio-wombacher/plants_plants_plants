@@ -169,6 +169,8 @@ If you want to download the data from Kaggle through python, there are two optio
 #############################
 '''
 Make sure data is downloaded and that the paths to the data directories are correct before running the rest of the code.
+
+If Oscar throws an error with PIL, type python preprocessor.py in terminal
 '''
 
 # For oscar

@@ -94,7 +94,7 @@ class PreprocessAsNumpyArrays:
         val_prepro = self.val_datagenerator.flow_from_directory(
             val_path,
             target_size=self.target_size,
-            batch_size=10861,
+            batch_size=11000,
             class_mode='categorical',
             shuffle=False
         )

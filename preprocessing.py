@@ -68,12 +68,12 @@ class PreprocessAsNumpyArrays:
         self.train_datagenerator = ImageDataGenerator(rescale=1./255, rotation_range=20, height_shift_range=0.1, validation_split=0.125)
         self.val_datagenerator = ImageDataGenerator(rescale=1./255) 
 
-    def load_all_batches(generator):
-        num_batches = np.ceil(generator.samples/generator.batch_size)
+    def load_all_batches(self, generator):
+        num_batches = int(np.ceil(generator.samples / generator.batch_size))
         images = []
         labels = []
 
-        for batch in num_batches:
+        for _ in range(num_batches):
             im_batch, lab_batch = next(generator)
             images.append(im_batch)
             labels.append(lab_batch)
@@ -119,13 +119,14 @@ class PreprocessAsNumpyArrays:
             shuffle=False
         )
 
+
         print('Validation prepro done.')
 
-        test_images, test_labels = next(test_prepro)
+        test_images, test_labels = self.load_all_batches(test_prepro)
         print('Test data extracted.')
-        val_images, val_labels = next(val_prepro)
+        val_images, val_labels = self.load_all_batches(val_prepro)
         print('Validation data extracted.')
-        train_images, train_labels = next(train_prepro)
+        train_images, train_labels = self.load_all_batches(train_prepro)
         print('\nTrain data extracted.')
         
 

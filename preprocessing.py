@@ -2,11 +2,24 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import pickle
+import os
+import shutil
 
 def InstallData():
     import kagglehub
     path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
     print("Path to dataset files:", path)
+
+def remove_incomplete_classes(train_dir, val_dir):
+    for base_dir in [train_dir, val_dir]:
+        for cls in [
+            'Blueberry___healthy', 'Orange___Haunglongbing_(Citrus_greening)',
+            'Raspberry___healthy', 'Soybean___healthy',
+            'Squash___Powdery_mildew'
+        ]:
+            path = os.path.join(base_dir, cls)
+            if os.path.isdir(path):
+                shutil.rmtree(path)
 
 class PreprocessAsKerasObject:
     '''  
@@ -35,6 +48,8 @@ class PreprocessAsKerasObject:
         
         self.val_datagenerator = ImageDataGenerator(rescale=1./255)
         
+
+    
     def call(self, train_path, val_path):
         ''' 
         @params:
@@ -190,7 +205,7 @@ class PreprocessAsNumpyArrays:
 
         return
     
-    def make_binary(labels):
+    def make_binary(self, labels):
         '''
         Takes the 33 class labels and encodes them as binary ([1,0] for healthy, [0,1] for unhealthy).
 
@@ -248,6 +263,9 @@ val_path = f'{oscar_path}/PlantVillage/val'
 # # For local device
 # train_path = '../PlantVillage/train'
 # val_path = '../PlantVillage/val'
+
+# Removing Incomplete Classes
+remove_incomplete_classes(train_path, val_path)
 
 preprocessor = PreprocessAsNumpyArrays()
 preprocessor.call(train_path=train_path, val_path=val_path)

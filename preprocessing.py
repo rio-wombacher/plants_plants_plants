@@ -25,13 +25,21 @@ class PreprocessAsKerasObject:
         self.target_size = (256,256)
         self.batch_size = 32 # The paper used 32, but that seems insufficient given that we have 38 classes
 
-        self.train_datagenerator = ImageDataGenerator(rescale=1./255, rotation_range=20, height_shift_range=0.1)
+        self.train_datagenerator = ImageDataGenerator(
+            rescale=1./255, 
+            rotation_range=20, 
+            height_shift_range=0.1, 
+            width_shift_range=0.1, 
+            vertical_flip=True
+            )
+        
         self.val_datagenerator = ImageDataGenerator(rescale=1./255)
         
     def call(self, train_path, val_path):
         ''' 
-        @train_path: file path to the training directory in PlantVillage (most likely ../PlantVillage/train)
-        @val_path: file path to the validation directory in PlantVillage (most likely ../PlantVillage/val)
+        @params:
+            train_path: file path to the training directory in PlantVillage (most likely ../PlantVillage/train)
+            val_path: file path to the validation directory in PlantVillage (most likely ../PlantVillage/val)
         '''
 
         train_prepro = self.train_datagenerator.flow_from_directory(
@@ -65,15 +73,29 @@ class PreprocessAsNumpyArrays:
         '''
         self.target_size = (256,256)
 
-        self.train_datagenerator = ImageDataGenerator(rescale=1./255, rotation_range=20, height_shift_range=0.1, validation_split=0.125)
+        self.train_datagenerator = ImageDataGenerator(
+            rescale=1./255, 
+            rotation_range=20, 
+            height_shift_range=0.1, 
+            width_shift_range=0.1, 
+            vertical_flip=True
+            validation_split=0.125
+            )
         self.val_datagenerator = ImageDataGenerator(rescale=1./255) 
 
     def load_all_batches(self, generator):
-        num_batches = int(np.ceil(generator.samples / generator.batch_size))
+        ''' 
+        @params:
+            generator: the preprocessor keras object (such as train_prepro defined in call)
+        @returns:
+            images: the full train/test/val tensor of preprocessed data
+            labels: the full train/test/val tensor of preprocessed labels
+        '''
+        num_batches = int(np.ceil(generator.samples/generator.batch_size))
         images = []
         labels = []
 
-        for _ in range(num_batches):
+        for i in range(num_batches):
             im_batch, lab_batch = next(generator)
             images.append(im_batch)
             labels.append(lab_batch)
@@ -85,8 +107,9 @@ class PreprocessAsNumpyArrays:
         
     def call(self, train_path, val_path):
         ''' 
-        @train_path: file path to the training directory in PlantVillage (most likely '../PlantVillage/train')
-        @val_path: file path to the validation directory in PlantVillage (most likely '../PlantVillage/val')
+        @params:
+            train_path: file path to the training directory in PlantVillage (most likely '../PlantVillage/train')
+            val_path: file path to the validation directory in PlantVillage (most likely '../PlantVillage/val')
         '''
 
         train_prepro = self.train_datagenerator.flow_from_directory(
@@ -130,25 +153,25 @@ class PreprocessAsNumpyArrays:
         print('\nTrain data extracted.')
         
 
-        #Pickle everything
+        # Pickle everything
 
+        # Training data and labels
         with open("../train_images.pkl", "wb") as f:
-            pickle.dump(train_images, f)
-        
+            pickle.dump(train_images, f)    
         with open("../train_labels.pkl", 'wb') as f:
             pickle.dump(train_labels, f)
         print('\nTrain data pickled.')
 
+        # Validation data and labels
         with open("../val_images.pkl", 'wb') as f:
             pickle.dump(val_images, f)
-        
         with open("../val_labels.pkl", 'wb') as f:
             pickle.dump(val_labels, f)
         print('Validation data pickled.')
 
+        # Testing data and labels
         with open("../test_images.pkl", 'wb') as f:
             pickle.dump(test_images, f)
-        
         with open("../test_labels", 'wb') as f:
             pickle.dump(test_labels, f)
         print('Test data pickled.')
@@ -158,6 +181,9 @@ class PreprocessAsNumpyArrays:
 #############################
 '''
 DOWNLOADING DATA
+
+Make sure you have the kagglehub API configured if you want to download the data from Kaggle (recommended).
+Follow the 'Installation' and 'Authentication' instructions at https://www.kaggle.com/docs/api.
 
 If you want to download the data from Kaggle through python, there are two options.
     Option 1: Run InstallData().

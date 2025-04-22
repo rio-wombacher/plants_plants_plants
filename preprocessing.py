@@ -5,7 +5,7 @@ import pickle
 import os
 import shutil
 
-def InstallData():
+def install_data():
     import kagglehub
     path = kagglehub.dataset_download("mohitsingh1804/plantvillage")
     print("Path to dataset files:", path)
@@ -235,7 +235,7 @@ Make sure you have the kagglehub API configured if you want to download the data
 Follow the 'Installation' and 'Authentication' instructions at https://www.kaggle.com/docs/api.
 
 If you want to download the data from Kaggle through python, there are two options.
-    Option 1: Run InstallData().
+    Option 1: Run install_data().
     Option 2: In terminal, type the following.
         python
         import kagglehub

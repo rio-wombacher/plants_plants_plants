@@ -7,13 +7,31 @@ import matplotlib.pyplot as plt
 from model_architecture import build_hybrid_model
 
 
-def load_datasets():
+def load_datasets(binary):
     """
     Load train, validation, and test datasets from preprocessed data
+    @params:
+        binary: a boolean indicating if you want full data or just the 
+    @returns:
+        train_images, train_labels, val_images, val_labels, test_images, test_images: preprocessed data tensors
     """
+    
+    with open('../train_images.pkl', 'rb') as f:
+        train_images = pickle.load(f)
+    with open('../train_labels.pkl', 'rb') as f:
+        train_labels = pickle.load(f)
+    
+    with open('../val_images.pkl', 'rb') as f:
+        val_images = pickle.load(f)
+    with open('../val_labels.pkl', 'rb') as f:
+        val_labels = pickle.load(f)
 
+    with open('../test_images.pkl', 'rb') as f:
+        test_images = pickle.load(f)
+    with open('../test_labels.pkl', 'rb') as f:
+        test_labels = pickle.load(f)
 
-    return train_data, val_data, test_data
+    return train_images, train_labels, val_images, val_labels, test_images, test_images
 
 
 def train_and_evaluate():

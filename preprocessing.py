@@ -177,6 +177,16 @@ class PreprocessAsNumpyArrays:
         print('Test data pickled.')
 
         return
+    
+    def make_binary(train_labels, val_labels, test_labels):
+        '''
+        Takes the 38 class labels and encodes them as binary (0 for healthy, 1 for unhealthy) before pickling.
+
+        @params:
+            train_labels, val_labels, test_labels: tensors with test labels of size (num_samples,38)     
+        '''
+        #{'Apple___healthy': 3, 'Blueberry___healthy': 4, 'Cherry_(including_sour)___healthy': 6, 'Corn_(maize)___healthy': 10, 'Grape___healthy': 14, 'Peach___healthy': 17, 'Pepper,_bell___healthy': 19, 'Potato___healthy': 22, 'Raspberry___healthy': 23, 'Soybean___healthy': 24, 'Strawberry___healthy': 27, 'Tomato___healthy': 37}
+
 
 #############################
 '''

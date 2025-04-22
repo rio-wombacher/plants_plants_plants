@@ -9,7 +9,7 @@ from model_architecture import build_hybrid_model
 
 def load_datasets():
     """
-    Load train, validation, and test datasets using ImageDataGenerator
+    Load train, validation, and test datasets from preprocessed data
     """
 
 

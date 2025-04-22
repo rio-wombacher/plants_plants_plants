@@ -151,6 +151,12 @@ class PreprocessAsNumpyArrays:
         print('Validation data extracted.')
         train_images, train_labels = self.load_all_batches(train_prepro)
         print('\nTrain data extracted.')
+
+        binary_train_labels = self.make_binary(train_labels)
+        binary_val_labels = self.make_binary(val_labels)
+        binary_test_labels = self.make_binary(test_labels)
+        print('\nTrain labels converted to binary.')
+        print('Binary train, val, test sizes: {binary_train_labels.shape, binary_val_labels.shape, binary_test_labels.shape}')
         
 
         # Pickle everything
@@ -160,6 +166,8 @@ class PreprocessAsNumpyArrays:
             pickle.dump(train_images, f)    
         with open("../train_labels.pkl", 'wb') as f:
             pickle.dump(train_labels, f)
+        with open("../binary_train_labels.pkl", 'wb') as f:
+            pickle.dump(binary_train_labels, f)
         print('\nTrain data pickled.')
 
         # Validation data and labels
@@ -167,6 +175,8 @@ class PreprocessAsNumpyArrays:
             pickle.dump(val_images, f)
         with open("../val_labels.pkl", 'wb') as f:
             pickle.dump(val_labels, f)
+        with open("../binary_val_labels.pkl", 'wb') as f:
+            pickle.dump(binary_val_labels, f)
         print('Validation data pickled.')
 
         # Testing data and labels
@@ -174,18 +184,32 @@ class PreprocessAsNumpyArrays:
             pickle.dump(test_images, f)
         with open("../test_labels", 'wb') as f:
             pickle.dump(test_labels, f)
+        with open("../binary_test_labels.pkl", 'wb') as f:
+            pickle.dump(binary_test_labels, f)
         print('Test data pickled.')
 
         return
     
-    def make_binary(train_labels, val_labels, test_labels):
+    def make_binary(labels):
         '''
-        Takes the 38 class labels and encodes them as binary (0 for healthy, 1 for unhealthy) before pickling.
+        Takes the 33 class labels and encodes them as binary ([1,0] for healthy, [0,1] for unhealthy).
 
         @params:
-            train_labels, val_labels, test_labels: tensors with test labels of size (num_samples,38)     
+            labels: tensor of labels of size (num_samples,33)    
+        @returns:
+            binary_labels: tensor of labels of size (num_samples,2)
         '''
-        #{'Apple___healthy': 3, 'Blueberry___healthy': 4, 'Cherry_(including_sour)___healthy': 6, 'Corn_(maize)___healthy': 10, 'Grape___healthy': 14, 'Peach___healthy': 17, 'Pepper,_bell___healthy': 19, 'Potato___healthy': 22, 'Raspberry___healthy': 23, 'Soybean___healthy': 24, 'Strawberry___healthy': 27, 'Tomato___healthy': 37}
+
+        healthy_codes = {'apple': 3, 'cherry': 5, 'corn': 9, 'grape': 13, 'peach': 15, 
+                         'bell pepper': 17, 'potato': 20, 'strawberry': 22, 'tomato': 32}
+
+        binary_labels = []
+        for label in labels:
+            if any([label[i] == 1 for i in healthy_codes.values()]):
+                binary_labels.append(tf.convert_to_tensor([1, 0]))  # Healthy plants
+            else:
+                binary_labels.append(tf.convert_to_tensor([0, 1]))  # Unhealthy plants
+        return tf.stack(binary_labels)
 
 
 #############################

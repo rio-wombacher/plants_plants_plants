@@ -5,6 +5,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.keras import layers, models
 import matplotlib.pyplot as plt
 from model_architecture import build_hybrid_model
+import pickle
 
 
 def load_datasets(binary):
@@ -15,30 +16,37 @@ def load_datasets(binary):
     @returns:
         train_images, train_labels, val_images, val_labels, test_images, test_images: preprocessed data tensors
     """
-    
     with open('../train_images.pkl', 'rb') as f:
-        train_images = pickle.load(f)
-    with open('../train_labels.pkl', 'rb') as f:
-        train_labels = pickle.load(f)
-    
+            train_images = pickle.load(f)
     with open('../val_images.pkl', 'rb') as f:
-        val_images = pickle.load(f)
-    with open('../val_labels.pkl', 'rb') as f:
-        val_labels = pickle.load(f)
-
+            val_images = pickle.load(f)
     with open('../test_images.pkl', 'rb') as f:
-        test_images = pickle.load(f)
-    with open('../test_labels.pkl', 'rb') as f:
-        test_labels = pickle.load(f)
+            test_images = pickle.load(f)
+
+    if binary:
+        with open('../binary_train_labels.pkl', 'rb') as f:
+            train_labels = pickle.load(f)
+        with open('../binary_val_labels.pkl', 'rb') as f:
+            val_labels = pickle.load(f)
+        with open('../binary_test_labels.pkl', 'rb') as f:
+            test_labels = pickle.load(f)
+    else: 
+        with open('../train_labels.pkl', 'rb') as f:
+            train_labels = pickle.load(f)
+        with open('../val_labels.pkl', 'rb') as f:
+            val_labels = pickle.load(f)
+        with open('../test_labels.pkl', 'rb') as f:
+            test_labels = pickle.load(f)
 
     return train_images, train_labels, val_images, val_labels, test_images, test_images
 
 
 def train_and_evaluate():
     # Paths
-    train_dir = 'dataset/train'
-    val_dir = 'dataset/val'
-    test_dir = 'dataset/test'
+    # train_dir = 'dataset/train'
+    # val_dir = 'dataset/val'
+    # test_dir = 'dataset/test'
+    binary = True # True for health/unhealthy, False for all 33 classes
     model_path = 'best_model.keras'
     input_shape = (256, 256, 3)
     num_classes = 38
@@ -46,7 +54,7 @@ def train_and_evaluate():
     epochs = 30
 
     # Load datasets
-    train_data, val_data, test_data = load_datasets(train_dir, val_dir, test_dir, target_size=input_shape[:2], batch_size=batch_size)
+    train_data, val_data, test_data = load_datasets(binary=binary)
 
     # Build model
     model = build_hybrid_model(input_shape=input_shape, num_classes=num_classes)

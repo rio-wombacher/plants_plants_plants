@@ -171,7 +171,7 @@ class PreprocessAsNumpyArrays:
         binary_val_labels = self.make_binary(val_labels)
         binary_test_labels = self.make_binary(test_labels)
         print('\nTrain labels converted to binary.')
-        print('Binary train, val, test sizes: {binary_train_labels.shape, binary_val_labels.shape, binary_test_labels.shape}')
+        print(f'Binary train, val, test sizes: {binary_train_labels.shape, binary_val_labels.shape, binary_test_labels.shape}')
         
 
         # Pickle everything

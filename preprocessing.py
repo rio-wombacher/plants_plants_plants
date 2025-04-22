@@ -78,7 +78,7 @@ class PreprocessAsNumpyArrays:
             rotation_range=20, 
             height_shift_range=0.1, 
             width_shift_range=0.1, 
-            vertical_flip=True
+            vertical_flip=True,
             validation_split=0.125
             )
         self.val_datagenerator = ImageDataGenerator(rescale=1./255) 

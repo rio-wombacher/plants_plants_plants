@@ -7,40 +7,11 @@ import matplotlib.pyplot as plt
 from model_architecture import build_hybrid_model
 
 
-def load_datasets(train_dir, val_dir, test_dir, target_size=(256, 256), batch_size=32):
+def load_datasets():
     """
     Load train, validation, and test datasets using ImageDataGenerator
     """
-    train_gen = ImageDataGenerator(rescale=1.0/255,
-                                   rotation_range=20,
-                                   width_shift_range=0.1,
-                                   height_shift_range=0.1,
-                                   zoom_range=0.2,
-                                   horizontal_flip=True)
 
-    val_test_gen = ImageDataGenerator(rescale=1.0/255)
-
-    train_data = train_gen.flow_from_directory(
-        train_dir,
-        target_size=target_size,
-        batch_size=batch_size,
-        class_mode='categorical'
-    )
-
-    val_data = val_test_gen.flow_from_directory(
-        val_dir,
-        target_size=target_size,
-        batch_size=batch_size,
-        class_mode='categorical'
-    )
-
-    test_data = val_test_gen.flow_from_directory(
-        test_dir,
-        target_size=target_size,
-        batch_size=batch_size,
-        class_mode='categorical',
-        shuffle=False  # Important for evaluation
-    )
 
     return train_data, val_data, test_data
 

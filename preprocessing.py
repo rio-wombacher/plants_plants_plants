@@ -246,7 +246,7 @@ If you want to download the data from Kaggle through python, there are two optio
     This way, you can use the oscar_path variable below. If this is not the case, adjust the oscar_path accordingly.
 '''
 
-#InstallData()
+#install_data()
 
 #############################
 '''

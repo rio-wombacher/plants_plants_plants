@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 
 
-def build_hybrid_model(input_shape=(256, 256, 3),binary=True):
+def build_hybrid_model(input_shape=(256, 256, 3),binary=False):
     """
     Hybrid CAE and CNN model for image classification of if a plant is diseased and what type of disease"""
     inputs = tf.keras.Input(shape=input_shape)

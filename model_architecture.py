@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 
 
-def build_hybrid_model(input_shape=(256, 256, 3)):
+def build_hybrid_model(input_shape=(256, 256, 3),binary=True):
     """
     Hybrid CAE and CNN model for image classification of if a plant is diseased and what type of disease"""
     inputs = tf.keras.Input(shape=input_shape)
@@ -32,7 +32,11 @@ def build_hybrid_model(input_shape=(256, 256, 3)):
 
     x = layers.Flatten()(x)                                                  # Flatten Layer
     x = layers.Dense(32, activation='relu')(x)                               # Dense #1
-    outputs = tf.keras.layers.Dense(38, activation='softmax')(x)                      # Dense #2
+
+    if binary:
+        outputs = tf.keras.layers.Dense(2, activation='softmax')(x)            # Dense #2
+    else:
+        outputs = tf.keras.layers.Dense(33, activation='softmax')(x) 
 
     model = models.Model(inputs=inputs, outputs=outputs)
     return model

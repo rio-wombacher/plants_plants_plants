@@ -42,10 +42,6 @@ def load_datasets(binary):
 
 
 def train_and_evaluate():
-    # Paths
-    # train_dir = 'dataset/train'
-    # val_dir = 'dataset/val'
-    # test_dir = 'dataset/test'
     binary = True # True for health/unhealthy, False for all 33 classes
     model_path = 'best_model.keras'
     input_shape = (256, 256, 3)

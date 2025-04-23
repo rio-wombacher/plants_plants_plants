@@ -45,7 +45,7 @@ def train_and_evaluate():
     binary = True # True for health/unhealthy, False for all 33 classes
     model_path = 'best_model.keras'
     input_shape = (256, 256, 3)
-    num_classes = 2 #FOR BINARY... 38? for regular
+    num_classes = 2 #2 for binary; 33 for regular
     batch_size = 32
     epochs = 10
 

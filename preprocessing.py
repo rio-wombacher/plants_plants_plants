@@ -197,7 +197,7 @@ class PreprocessAsNumpyArrays:
         # Testing data and labels
         with open("../test_images.pkl", 'wb') as f:
             pickle.dump(test_images, f)
-        with open("../test_labels", 'wb') as f:
+        with open("../test_labels.pkl", 'wb') as f:
             pickle.dump(test_labels, f)
         with open("../binary_test_labels.pkl", 'wb') as f:
             pickle.dump(binary_test_labels, f)

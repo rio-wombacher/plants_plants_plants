@@ -55,7 +55,7 @@ def train_and_evaluate():
     train_data, train_labels, val_data, val_labels, test_data, test_labels = load_datasets(binary=binary)
 
     # Build model
-    model = build_hybrid_model(input_shape=input_shape, binary=True)
+    model = build_hybrid_model(input_shape=input_shape, binary=binary)
 
     # Compile model
     model.compile(optimizer='adam',

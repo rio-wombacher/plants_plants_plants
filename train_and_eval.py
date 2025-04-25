@@ -42,10 +42,12 @@ def load_datasets(binary):
 
 
 def train_and_evaluate():
-    binary = True # True for health/unhealthy, False for all 33 classes
-    model_path = 'best_model.keras'
+    binary = False # True for health/unhealthy, False for all 33 classes
+    if binary:
+        model_path = 'best_model_binary.keras'
+    else:
+        model_path = 'best_model_all_classes.keras'
     input_shape = (256, 256, 3)
-    num_classes = 2 #2 for binary; 33 for regular
     batch_size = 32
     epochs = 10
 

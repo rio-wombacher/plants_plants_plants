@@ -48,7 +48,7 @@ def train_and_evaluate():
         epochs = 10
     else:
         model_path = 'best_model_all_classes.keras'
-        epochs = 20
+        epochs = 50
     input_shape = (256, 256, 3)
     batch_size = 32
 
@@ -65,7 +65,7 @@ def train_and_evaluate():
 
     # Callbacks
     checkpoint = ModelCheckpoint(model_path, save_best_only=True, monitor='val_accuracy', verbose=1)
-    early_stop = EarlyStopping(patience=5, restore_best_weights=True, monitor='val_accuracy', verbose=1)
+    early_stop = EarlyStopping(patience=7, restore_best_weights=True, monitor='val_accuracy', verbose=1)
 
     # Train model
     history = model.fit(

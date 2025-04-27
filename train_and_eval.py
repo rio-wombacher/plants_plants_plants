@@ -45,11 +45,12 @@ def train_and_evaluate():
     binary = False # True for health/unhealthy, False for all 33 classes
     if binary:
         model_path = 'best_model_binary.keras'
+        epochs = 10
     else:
         model_path = 'best_model_all_classes.keras'
+        epochs = 20
     input_shape = (256, 256, 3)
     batch_size = 32
-    epochs = 10
 
     # Load datasets
     train_data, train_labels, val_data, val_labels, test_data, test_labels = load_datasets(binary=binary)
@@ -90,7 +91,7 @@ def train_and_evaluate():
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig("training_plot.png")
+    plt.savefig(f"training_plot_binary_{binary}.png")
     plt.show()
 
     # Load best model and evaluate on test set
